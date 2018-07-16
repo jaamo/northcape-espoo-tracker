@@ -3,10 +3,10 @@
 
     <GmapMap
     :center="mapDefaultPosition"
-    :zoom="10"
+    :zoom="7"
     :options="options"
     map-type-id="roadmap"
-    style="width: 100vw; height: 60vh"
+    style="width: 100vw; height: 50vh"
     ref="mapRef"
     >
         <GmapMarker
@@ -20,10 +20,32 @@
     </GmapMap>
 
     <div class="popup">
-        Popup:
-        <div v-if="item">
-            {{ item.fields.title }}
-        </div>
+
+        <carousel :perPage=1 :paginationPadding=4 paginationColor="#999999" paginationActiveColor="#ce1a2b">
+            <slide>
+                <div v-if="item">
+                    {{ item.fields.title }}
+                    {{ item.createdAtTime }}
+                    {{ item.createdAtDate }}
+                    {{ item.dailyDistance }}
+                    {{ item.totalDistance }}
+                </div>
+            </slide>
+            <slide>
+                <div v-if="item">
+                    {{ item.fields.story }}
+                </div>
+            </slide>
+            <slide>
+                <div v-if="item.img">
+                    <img :src=item.img >
+                </div>
+            </slide>
+        </carousel>
+
+        <button class="btn btn--left">Edellinen</button>
+        <button class="btn btn--right">Seuraava</button>
+
     </div>
 
   </div>
@@ -54,7 +76,7 @@ function loadGPXFileIntoGoogleMap(map, filename) {
             const xmlData = domParser.parseFromString(data, 'text/xml');
 
             let parser = new GPXParser(xmlData, map);
-            parser.setTrackColour("#ff0000");     // Set the track line colour
+            parser.setTrackColour("#ce1a2b");     // Set the track line colour
             parser.setTrackWidth(5);              // Set the track line width
             parser.setMinTrackPointDelta(0.001);  // Set the minimum distance between track points
             // parser.centerAndZoom(data);
@@ -125,8 +147,30 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 30vh;
+    height: 50vh;
     background: rgba(255,255,255,0.8);
-    padding: 2rem;
+    padding: 0rem;
+    box-shadow: 0 0 6rem rgba(0,0,0,0.4);
+}
+.VueCarousel-wrapper {
+    height: calc(50vh - 6rem);
+}
+.btn {
+    position: absolute;
+    bottom: 0;
+    width: 50%;
+    background: #ce1a2b;
+    line-height: 3rem;
+    text-align: center;
+    border: 0;
+    color: white;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.btn--left {
+    left: 0;
+}
+.btn--right {
+    right: 0;
 }
 </style>

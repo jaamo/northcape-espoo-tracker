@@ -80,11 +80,24 @@ export default new Vuex.Store({
 				// Sort list by date in ascending order.
 				items.sort((a, b) => (new Date(a.sys.createdAt)).getTime() > (new Date(b.sys.createdAt)).getTime());
 
-				// Find previous & next.
 				items.forEach((item, i) => {					
+
+					// Find previous & next.
 					item.previous = typeof(items[i-1]) != 'undefined' ? items[i-1].sys.id : false;
 					item.next = typeof(items[i+1]) != 'undefined' ? items[i+1].sys.id : false;
+
+					// Format date
+					let createdAt = new Date(item.sys.createdAt);
+					item.createdAtTime = createdAt.getHours() + ':' + createdAt.getMinutes()
+					item.createdAtDate = createdAt.getDate() + '.' + (createdAt.getMonth() + 1) + '.' + createdAt.getFullYear();
+
+					// Create shortcut for image.
+					if (typeof(item.fields.photo) != 'undefined') {
+						item.img = item.fields.photo[0].fields.file.url;
+					}
+
 				});
+
 
 				// Calculate total distance.
 				let totalDistance = 0;
