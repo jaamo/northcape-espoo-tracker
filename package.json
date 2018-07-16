@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "contentful": "^6.1.1",
+    "core-js": "^2.5.7",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
     "vue2-google-maps": "^0.10.0",

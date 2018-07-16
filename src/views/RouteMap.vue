@@ -2,11 +2,11 @@
   <div class="map">
 
     <GmapMap
-    :center="{lat:60.1648608, lng:24.9005515}"
+    :center="mapDefaultPosition"
     :zoom="10"
-    :options={styles:styles}
-    map-type-id="terrain"
-    style="width: 500px; height: 300px"
+    :options="options"
+    map-type-id="roadmap"
+    style="width: 100vw; height: 60vh"
     ref="mapRef"
     >
         <GmapMarker
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+//    :center="{ lat: 60.1648608, lng: 24.9005515 }"
 import { mapState, mapActions } from 'vuex'
 import { mapStyle } from '../mapStyle.js'
 import { GPXParser } from '../lib/gpxview.js'
@@ -72,12 +73,25 @@ export default {
     name: 'RouteMap',
 
     data() {
-      return { styles: mapStyle }
+        return { 
+            options: { 
+                styles: mapStyle,
+                zoomControl: true, 
+                mapTypeControl: false, 
+                scaleControl: true, 
+                streetViewControl: false, 
+                rotateControl: false, 
+                fullscreenControl: false
+            }
+        }
     },
     
     computed: mapState({
+
         items: state => state.items,
-        item: state => state.item
+        item: state => state.item,
+        mapDefaultPosition: state => state.mapDefaultPosition
+
     }),
   
     methods: {
@@ -90,13 +104,29 @@ export default {
     },
 
     mounted() {
+
+        // Load items. 
         this.loadItems();
 
+        // Load GPX route to the map.
         this.$refs.mapRef.$mapPromise.then((map) => {
-            loadGPXFileIntoGoogleMap(map, 'gpx/route01.gpx');
+            loadGPXFileIntoGoogleMap(map, 'gpx/northcape-espoo.gpx');
         });
+
     }
 
 }
 
 </script>
+
+<style>
+.popup {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 30vh;
+    background: rgba(255,255,255,0.8);
+    padding: 2rem;
+}
+</style>

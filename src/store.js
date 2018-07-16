@@ -16,7 +16,8 @@ export default new Vuex.Store({
 
 	state: {
 		items: [],
-		item: false
+		item: false,
+		mapDefaultPosition: { lat: 60.1648608, lng: 24.9005515 }
 	},
 
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
 		//
 		setItems(state, payload) {
 			state.items = payload.items;
+			state.mapDefaultPosition = payload.items[payload.items.length - 1].position;
 		},
 
 		//
@@ -37,7 +39,15 @@ export default new Vuex.Store({
 		//
 		setItem(state, payload) {
 			state.item = payload.item
+		},
+
+		//
+		// Set total distance.
+		//
+		setTotalDistance(state, payload) {
+			state.totalDistance = payload.totalDistance
 		}
+
 
 	},
 
@@ -48,20 +58,68 @@ export default new Vuex.Store({
 	actions: {
 
 		//
-		// Load items from Contentful.
+		// Load items from Contentful and do some post processing.
 		//
 		loadItems(context) {
 
 			contentfulClient.getEntries().then(function (entries) {
 
-				console.log(entries);
-				entries.items.forEach(function (entry) {
+				let items = entries.items;
+
+				// Add lat & lng parameters to that the array can 
+				// be directly used as Google Maps markers
+				items.forEach(function (entry) {
 					entry.position = {
 						lat: entry.fields.location.lat,
 						lng: entry.fields.location.lon
 					}
 				});
-				context.commit('setItems', { items: entries.items });
+
+				console.log(items);
+
+				// Sort list by date in ascending order.
+				items.sort((a, b) => (new Date(a.sys.createdAt)).getTime() > (new Date(b.sys.createdAt)).getTime());
+
+				// Find previous & next.
+				items.forEach((item, i) => {					
+					item.previous = typeof(items[i-1]) != 'undefined' ? items[i-1].sys.id : false;
+					item.next = typeof(items[i+1]) != 'undefined' ? items[i+1].sys.id : false;
+				});
+
+				// Calculate total distance.
+				let totalDistance = 0;
+				let previousDistance = 0;
+				let dailyDistance = 0;
+				items.forEach((item, i) => {
+
+					let distance = parseFloat(item.fields.dailyDistance);
+
+					// New distance is lower than previous. New day!
+					if (distance < previousDistance) {
+
+						// Add yesterdays kilometers to total.
+						totalDistance += dailyDistance;
+
+						// Reset daily distance.
+						dailyDistance = distance;
+
+					} else {
+					
+						dailyDistance += distance;
+						
+					}
+
+					item.dailyDistance = dailyDistance;
+					item.totalDistance = totalDistance + dailyDistance;
+
+				});
+
+				context.commit('setTotalDistance', { totalDistance: totalDistance });
+
+				console.log(items);
+
+				// Set to store.
+				context.commit('setItems', { items: items });
 
 			});
 
@@ -82,7 +140,8 @@ export default new Vuex.Store({
 				this.commit('setItem', { item: items[0] });
 			}
 
-		}
+		},
+
 
 	}
 

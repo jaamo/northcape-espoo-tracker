@@ -9,7 +9,9 @@ This is a simple micro blogging platform for my Northcape - Espoo ride in 2018. 
 More information about the trip:
 http://www.kampiapina.com/blogi/nordkapp-espoo/
 
-## To develop
+## To develop  
 
 `yarn run serve`
 
+Or dive into fancy UI:  
+`vue ui`
