@@ -24,27 +24,33 @@
         <carousel :perPage=1 :paginationPadding=4 paginationColor="#999999" paginationActiveColor="#ce1a2b">
             <slide>
                 <div v-if="item">
-                    {{ item.fields.title }}
-                    {{ item.createdAtTime }}
-                    {{ item.createdAtDate }}
-                    {{ item.dailyDistance }}
-                    {{ item.totalDistance }}
+                    <div class="popup__title">{{ item.fields.title }}</div>
+                    <div class="popup__date">{{ item.createdAtTime }} {{ item.createdAtDate }}</div>
+                    <div class="popup__dailydistance">
+                        <div class="popup__dailydistance__title">Tänään</div>
+                        <div class="popup__dailydistance__distance">{{ item.dailyDistance }} km</div>
+                    </div>
+                    <div class="popup__totaldistance">
+                        <div class="popup__totaldistance__title">Yhteensä</div>
+                        <div class="popup__totaldistance__distance">{{ item.totalDistance }} km</div>
+                    </div>
                 </div>
             </slide>
             <slide>
-                <div v-if="item">
-                    {{ item.fields.story }}
+                <div class="popup__story">
+                    <div v-if="item">                    
+                        {{ item.fields.story }}
+                    </div>
                 </div>
             </slide>
             <slide>
-                <div v-if="item.img">
-                    <img :src=item.img >
+                <div v-if="item.img" class="popup__image" :style="'background-image:url(' + item.img + ')'">
                 </div>
             </slide>
         </carousel>
 
-        <button class="btn btn--left">Edellinen</button>
-        <button class="btn btn--right">Seuraava</button>
+        <button class="btn btn--left" v-on:click="selectItem(item.previous)">Edellinen</button>
+        <button class="btn btn--right" v-on:click="selectItem(item.next)">Seuraava</button>
 
     </div>
 
@@ -141,7 +147,7 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss">
 .popup {
     position: fixed;
     bottom: 0;
@@ -151,6 +157,50 @@ export default {
     background: rgba(255,255,255,0.8);
     padding: 0rem;
     box-shadow: 0 0 6rem rgba(0,0,0,0.4);
+    &__title {
+        margin-top: 2rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+        line-height: 2rem;
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    &__date {
+        line-height: 2rem;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #999999;
+    }
+    &__dailydistance, &__totaldistance {
+        width: 50%;
+        display: inline-block;
+        margin-top: 1rem;
+        &__title {
+            text-align: center;
+            color: #999999;
+            text-transform: uppercase;        
+            font-size: 0.8rem;
+        }
+        &__distance {
+            color: #999999;
+            text-align: center;
+            font-weight: 700;
+            font-size: 2rem;
+        }
+    }
+    &__story {
+        padding: 2rem;
+    }
+    &__image {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        height: calc(50vh - 7rem);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
 }
 .VueCarousel-wrapper {
     height: calc(50vh - 6rem);

@@ -32,6 +32,7 @@ export default new Vuex.Store({
 		setItems(state, payload) {
 			state.items = payload.items;
 			state.mapDefaultPosition = payload.items[payload.items.length - 1].position;
+			state.item = payload.items[payload.items.length - 1];
 		},
 
 		//
@@ -39,6 +40,7 @@ export default new Vuex.Store({
 		//
 		setItem(state, payload) {
 			state.item = payload.item
+			state.mapDefaultPosition = payload.item.position;
 		},
 
 		//
