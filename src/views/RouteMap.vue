@@ -194,6 +194,7 @@ export default {
     }
     &__story {
         padding: 2rem;
+        text-align: center;
     }
     &__image {
         margin: 1rem;

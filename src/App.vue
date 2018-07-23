@@ -36,14 +36,15 @@ body {
   right: 0.5rem;
   top: 0.5rem;
   z-index: 1000;
-  background: white;
-  color: #292929;
+  background: #ce1a2b;
+  color: white;
   text-transform: uppercase;
   font-size: 0.6rem;
-  line-height: 1rem;
+  line-height: 1.2rem;
   padding-left: 1rem;
   padding-right: 1rem;
   text-decoration: none;
-  border: 0.1rem solid #292929;
+  box-shadow: 0.1rem 0.1rem 0 rgba(0, 0, 0, 0.2);
+  font-weight: 700;
 }
 </style>
