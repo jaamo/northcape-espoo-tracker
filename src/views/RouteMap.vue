@@ -49,8 +49,8 @@
             </slide>
         </carousel>
 
-        <button class="btn btn--left" v-on:click="selectItem(item.previous)">Edellinen</button>
-        <button class="btn btn--right" v-on:click="selectItem(item.next)">Seuraava</button>
+        <button :class=previousClass v-on:click="selectItem(item.previous)">Edellinen</button>
+        <button :class=nextClass v-on:click="selectItem(item.next)">Seuraava</button>
 
     </div>
 
@@ -118,7 +118,9 @@ export default {
 
         items: state => state.items,
         item: state => state.item,
-        mapDefaultPosition: state => state.mapDefaultPosition
+        mapDefaultPosition: state => state.mapDefaultPosition,
+        previousClass: state => 'btn btn--left' + (!state.item.previous ? ' btn--disabled' : ''),
+        nextClass: state => 'btn btn--right' + (!state.item.next ? ' btn--disabled' : '')
 
     }),
   
@@ -216,11 +218,15 @@ export default {
     color: white;
     font-size: 1rem;
     font-weight: 700;
-}
-.btn--left {
-    left: 0;
-}
-.btn--right {
-    right: 0;
+    &--left {
+        left: 0;
+    }
+    &--right {
+        right: 0;
+    }
+    &--disabled {
+        background: #999999;
+        color: #292929;
+    }
 }
 </style>
