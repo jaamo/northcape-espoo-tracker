@@ -138,7 +138,7 @@ export default {
 
         // Load GPX route to the map.
         this.$refs.mapRef.$mapPromise.then((map) => {
-            loadGPXFileIntoGoogleMap(map, 'gpx/northcape-espoo.gpx');
+            loadGPXFileIntoGoogleMap(map, 'gpx/northcape-espoo-simple.gpx');
         });
 
     }

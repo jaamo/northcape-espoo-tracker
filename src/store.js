@@ -77,8 +77,6 @@ export default new Vuex.Store({
 					}
 				});
 
-				console.log(items);
-
 				// Sort list by date in ascending order.
 				items.sort((a, b) => (new Date(a.sys.createdAt)).getTime() > (new Date(b.sys.createdAt)).getTime());
 
@@ -131,8 +129,6 @@ export default new Vuex.Store({
 
 				context.commit('setTotalDistance', { totalDistance: totalDistance });
 
-				console.log(items);
-
 				// Set to store.
 				context.commit('setItems', { items: items });
 
@@ -151,7 +147,6 @@ export default new Vuex.Store({
 			});
 
 			if (items.length > 0) {
-				console.log(items[0]);
 				this.commit('setItem', { item: items[0] });
 			}
 
