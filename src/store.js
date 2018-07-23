@@ -103,15 +103,15 @@ export default new Vuex.Store({
 				let totalDistance = 0;
 				let previousDistance = 0;
 				let dailyDistance = 0;
-				items.forEach((item, i) => {
+				items.forEach((item) => {
 
 					let distance = parseFloat(item.fields.dailyDistance);
 
+					// Add to total distance.
+					totalDistance += distance;
+
 					// New distance is lower than previous. New day!
 					if (distance < previousDistance) {
-
-						// Add yesterdays kilometers to total.
-						totalDistance += dailyDistance;
 
 						// Reset daily distance.
 						dailyDistance = distance;
@@ -122,10 +122,18 @@ export default new Vuex.Store({
 						
 					}
 
+					previousDistance = distance;
+
 					item.dailyDistance = dailyDistance;
-					item.totalDistance = totalDistance + dailyDistance;
+					item.totalDistance = totalDistance;
 
 				});
+
+				let rows = [];
+				items.forEach((item) => {
+					rows.push([item.fields.title, item.fields.dailyDistance, item.dailyDistance, item.totalDistance]);
+				});
+				console.table(rows);
 
 				context.commit('setTotalDistance', { totalDistance: totalDistance });
 
