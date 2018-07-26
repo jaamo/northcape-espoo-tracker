@@ -58,7 +58,6 @@
 </template>
 
 <script>
-//    :center="{ lat: 60.1648608, lng: 24.9005515 }"
 import { mapState, mapActions } from 'vuex'
 import { mapStyle } from '../mapStyle.js'
 import { GPXParser } from '../lib/gpxview.js'
