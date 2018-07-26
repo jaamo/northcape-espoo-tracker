@@ -92,7 +92,7 @@ function loadGPXFileIntoGoogleMap(map, filename) {
 
         });
 
-    }, error => {});
+    });
 
 }
 
@@ -158,7 +158,6 @@ export default {
     height: 50vh;
     background: rgba(255,255,255,0.8);
     padding: 0rem;
-    box-shadow: 0 0 6rem rgba(0,0,0,0.4);
     &__title {
         margin-top: 2rem;
         margin-left: 1rem;
