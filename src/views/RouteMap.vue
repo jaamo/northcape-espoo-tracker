@@ -27,11 +27,11 @@
                     <div class="popup__title">{{ item.fields.title }}</div>
                     <div class="popup__date">{{ item.createdAtTime }} {{ item.createdAtDate }}</div>
                     <div class="popup__dailydistance">
-                        <div class="popup__dailydistance__title">Tänään</div>
+                        <div class="popup__dailydistance__title">Today</div>
                         <div class="popup__dailydistance__distance">{{ item.dailyDistance }} km</div>
                     </div>
                     <div class="popup__totaldistance">
-                        <div class="popup__totaldistance__title">Yhteensä</div>
+                        <div class="popup__totaldistance__title">Total</div>
                         <div class="popup__totaldistance__distance">{{ item.totalDistance }} km</div>
                     </div>
                 </div>
@@ -49,8 +49,8 @@
             </slide>
         </carousel>
 
-        <button :class=previousClass v-on:click="selectItem(item.previous)">Edellinen</button>
-        <button :class=nextClass v-on:click="selectItem(item.next)">Seuraava</button>
+        <button :class=previousClass v-on:click="selectItem(item.previous)">Previous</button>
+        <button :class=nextClass v-on:click="selectItem(item.next)">Next</button>
 
     </div>
 

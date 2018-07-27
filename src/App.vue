@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <a href="http://www.kampiapina.com/blogi/" target="_blank"><img class="logo" src="/logo.png"></a>
-    <a href="http://www.kampiapina.com/blogi/nordkapp-espoo/" target="_blank" class="info-button">Tietoa matkasta</a>
+    <a href="http://www.kampiapina.com/blogi/nordkapp-espoo/" target="_blank" class="info-button">About the ride (fi)</a>
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
