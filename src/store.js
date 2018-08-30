@@ -107,25 +107,19 @@ export default new Vuex.Store({
 
 					let distance = parseFloat(item.fields.dailyDistance);
 
-					// Add to total distance.
-					totalDistance += distance;
 
 					// New distance is lower than previous. New day!
 					if (distance < previousDistance) {
 
 						// Reset daily distance.
-						dailyDistance = distance;
+						totalDistance += previousDistance;
 
-					} else {
-					
-						dailyDistance += distance;
-						
 					}
 
 					previousDistance = distance;
 
-					item.dailyDistance = dailyDistance;
-					item.totalDistance = totalDistance;
+					item.dailyDistance = Math.round(parseFloat(item.fields.dailyDistance));
+					item.totalDistance = Math.round(totalDistance + distance);
 
 				});
 
